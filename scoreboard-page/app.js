@@ -11,9 +11,9 @@ const Header = (props) => {
   const {title, totalPlayers} = props;
   return (
     <div className="header d-flex justify-content-between align-items-md-center p-2">
-      <span></span>
+      <span>Total Score:</span>
       <h1 className="h1">{title}</h1>
-      <span className='stats'>Players: {totalPlayers}</span>
+      <span>Players: {totalPlayers}</span>
     </div>
   );
 }
@@ -26,7 +26,7 @@ const Player = (props) => (
                 onClick={() => props.removePlayer(props.id)}>x</button>
       </div>
       <div className="col-8">
-        <span className='player-name'>{props.name}</span>
+        <span>{props.name}</span>
       </div>
       <div className="col-3 counter">
         <Counter/>
