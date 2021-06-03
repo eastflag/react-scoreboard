@@ -17,10 +17,9 @@ const players = React.createElement(
   'players: 0'
 );
 
-
 const header = React.createElement(
   'div',
-  { class: 'header d-flex justify-content-between align-items-md-center p-2'},
+  { class: 'header d-flex justify-content-between align-items-center p-2'},
   totalScore, title, players
 );
 
