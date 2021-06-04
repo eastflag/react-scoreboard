@@ -1,3 +1,10 @@
+const players = [
+  {name: 'LDK', score: 30},
+  {name: 'HONG', score: 40},
+  {name: 'KIM', score: 50},
+  {name: 'PARK', score: 60},
+];
+
 const Header = (props) => {
   console.log(props);
   // props는 read only 이다. 아래와 같이 하면 안된다.
@@ -33,7 +40,7 @@ const App = (props) => (
     <Header title="My Scoreboard" totalPlayers={11}/>
 
     {/*Players List*/}
-    { props.initialPlayers.map(item => <Player name={item.name} score={item.score} key={item.id} />) }
+    { props.initialPlayers.map(item => <Player name={item.name} score={item.score} key={item.name} />) }
   </div>);
 
 ReactDOM.render(<App initialPlayers={players} />, document.getElementById('root'));
