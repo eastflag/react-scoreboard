@@ -1,21 +1,9 @@
-const title = React.createElement(
-  'h1',
-  { title: 'This is a title'},
-  'My Scoreboard'
-);
+const title = <h1 title="This is a title">My Scoreboard</h1>;
 console.log(title);
 
-const totalScore = React.createElement(
-  'span',
-  null,
-  'Total Score: 0'
-);
+const totalScore = <span>Total Score: 0</span>;
 
-const players = React.createElement(
-  'span',
-  null,
-  'players: 0'
-);
+const players = <span>players: 0</span>;
 
 const header = React.createElement(
   'div',
