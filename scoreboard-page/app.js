@@ -5,10 +5,8 @@ const totalScore = <span>Total Score: 0</span>;
 
 const players = <span>players: 0</span>;
 
-const header = React.createElement(
-  'div',
-  { class: 'header d-flex justify-content-between align-items-center p-2'},
-  totalScore, title, players
-);
+const header = (<div className="header d-flex justify-content-between align-items-center p-2">
+  {[totalScore, title, players]}
+</div>);
 
 ReactDOM.render(header, document.getElementById('root'));
