@@ -34,12 +34,19 @@ class Counter extends React.Component {
     score: 0
   };
 
+  incrementScore() {
+    console.log('increment');
+    this.setState(
+      {score: this.state.score + 1}
+    );
+  }
+
   render() {
     return (
       <div className='d-flex justify-content-between align-items-center'>
         <button className='btn btn-info' > - </button>
         <span>{this.state.score}</span>
-        <button className='btn btn-info'> + </button>
+        <button className='btn btn-info' onClick={this.incrementScore}> + </button>
       </div>
     );
   }
