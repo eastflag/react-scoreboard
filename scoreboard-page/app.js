@@ -19,7 +19,11 @@ const Header = (props) => {
 const Player = (props) => (
   <div className="container">
     <div className='player row align-items-center'>
-      <div className="col-9">
+      <div className="col-1">
+        <button className="btn btn-danger"
+                onClick={() => props.removePlayer(props.id)}>x</button>
+      </div>
+      <div className="col-8">
         <span>{props.name}</span>
       </div>
       <div className="col-3 counter">
@@ -58,12 +62,36 @@ class Counter extends React.Component {
   }
 }
 
-const App = (props) => (
-  <div className="container p-3">
-    <Header title="My Scoreboard" totalPlayers={11}/>
+class App extends React.Component {
+  state = {
+    players: [
+      {name: 'LDK', id: 1},
+      {name: 'HONG', id: 2},
+      {name: 'KIM', id: 3},
+      {name: 'PARK', id: 4},
+    ]
+  };
 
-    {/*Players List*/}
-    { props.initialPlayers.map(item => <Player name={item.name} score={item.score} key={item.name} />) }
-  </div>);
+  handleRemovePlayer = (id) => {
+    this.setState(prevState => {
+      return {
+        players: prevState.players.filter(item => item.id !== id)
+      }
+    })
+  }
 
-ReactDOM.render(<App initialPlayers={players} />, document.getElementById('root'));
+  render() {
+    return (
+      <div className="container p-3">
+        <Header title="My scoreboard" totalPlayers={this.state.players.length} />
+
+        {/*Players List*/}
+        { this.state.players.map(item =>
+          <Player name={item.name} key={item.id}
+            removePlayer={this.handleRemovePlayer} id={item.id} />) }
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
