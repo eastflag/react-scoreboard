@@ -29,11 +29,21 @@ const Player = (props) => (
   </div>
 );
 
-const Counter = (props) => (<div className='d-flex justify-content-between align-items-center'>
-  <button className='btn btn-info' > - </button>
-  <span>{props.score}</span>
-  <button className='btn btn-info'> + </button>
-</div>)
+class Counter extends React.Component {
+  state = {
+    score: 0
+  };
+
+  render() {
+    return (
+      <div className='d-flex justify-content-between align-items-center'>
+        <button className='btn btn-info' > - </button>
+        <span>{this.state.score}</span>
+        <button className='btn btn-info'> + </button>
+      </div>
+    );
+  }
+}
 
 const App = (props) => (
   <div className="container p-3">
