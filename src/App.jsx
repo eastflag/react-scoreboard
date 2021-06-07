@@ -24,6 +24,16 @@ class App extends React.Component {
 
   handleChangeScore = (id, delta) => {
     console.log('id: ' + id, 'delta: ' + delta);
+    this.setState(prevState => {
+      // 새로운 players 배열 생성
+      const players = [ ...prevState.players ];
+      players.forEach(player => {
+        if (player.id === id) {
+          player.score += delta;
+        }
+      })
+      return { players }
+    })
   }
 
   render() {
