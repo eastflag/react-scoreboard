@@ -11,7 +11,7 @@ export const Player = (props) => (
         <span>{props.name}</span>
       </div>
       <div className="col-3 counter">
-        <Counter score={props.score} />
+        <Counter score={props.score} id={props.id} changeScore={props.changeScore} />
       </div>
     </div>
   </div>
