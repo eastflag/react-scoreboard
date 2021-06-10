@@ -25,6 +25,7 @@ export class AddPlayerForm extends Component {
     console.log(form.checkValidity());
 
     if (!form.checkValidity()) {
+      form.classList.add('was-validated');
       return;
     }
 
@@ -32,19 +33,23 @@ export class AddPlayerForm extends Component {
     this.setState({
       value: ''
     });
+    form.classList.remove('was-validated');
   }
 
   render() {
     return (
       <div className="container">
         <form ref={this.formRef} noValidate
-              className="row player align-items-center" onSubmit={this.handleSubmit}>
+              className="row player align-items-center needs-validation" onSubmit={this.handleSubmit}>
           <div className="col-9">
             {/*<label htmlFor="playerName" className="form-label">Player Name</label>*/}
             <input ref={this.textRef}
                    type="text" className="form-control" id="playerName" placeholder="input player name"
                    required
                    value={this.state.value} onChange={this.handleValueChange}></input>
+            <div className="invalid-feedback">
+              Please input name.
+            </div>
           </div>
           <div className="col-3 d-grid">
             <button type="submit" className="btn btn-primary">Add Player</button>
