@@ -9,10 +9,18 @@ export class AddPlayerForm extends Component {
     this.setState({value: e.target.value});
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addPlayer(this.state.value);
+    this.setState({
+      value: ''
+    });
+  }
+
   render() {
     return (
       <div className="container">
-        <form className="row player align-items-center">
+        <form className="row player align-items-center" onSubmit={this.handleSubmit}>
           <div className="col-9">
             {/*<label htmlFor="playerName" className="form-label">Player Name</label>*/}
             <input type="text" className="form-control" id="playerName" placeholder="input player name"

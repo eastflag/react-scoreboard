@@ -4,6 +4,7 @@ import './App.css';
 import {Header} from "./components/Header";
 import {Player} from "./components/Player";
 import {AddPlayerForm} from "./components/AddPlayerForm";
+import _ from 'lodash';
 
 class App extends React.Component {
   state = {
@@ -37,6 +38,20 @@ class App extends React.Component {
     })
   }
 
+  handleAddPlayer = (name) => {
+    console.log(name);
+    this.setState(prevState => {
+      const players = [ ... prevState.players ];
+
+      const maxObject = _.maxBy(players, 'id');
+      const maxId = maxObject.id + 1;
+      console.log(maxId);
+      players.unshift({id: maxId, name, score: 0});
+
+      return { players };
+    });
+  };
+
   render() {
     return (
       <div className="container p-3">
@@ -49,7 +64,7 @@ class App extends React.Component {
                   removePlayer={this.handleRemovePlayer}
                   changeScore={this.handleChangeScore} />) }
 
-        <AddPlayerForm></AddPlayerForm>
+        <AddPlayerForm addPlayer={this.handleAddPlayer}></AddPlayerForm>
       </div>
     );
   }
