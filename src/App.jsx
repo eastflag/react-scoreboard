@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {Header} from "./components/Header";
 import {Player} from "./components/Player";
+import {AddPlayerForm} from "./components/AddPlayerForm";
 
 class App extends React.Component {
   state = {
@@ -47,6 +48,8 @@ class App extends React.Component {
                   name={item.name} score={item.score} id={item.id}
                   removePlayer={this.handleRemovePlayer}
                   changeScore={this.handleChangeScore} />) }
+
+        <AddPlayerForm></AddPlayerForm>
       </div>
     );
   }
