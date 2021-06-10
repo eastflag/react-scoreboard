@@ -5,12 +5,29 @@ export class AddPlayerForm extends Component {
     value: ''
   };
 
+  constructor(props) {
+    super(props);
+    this.formRef = React.createRef();
+    this.textRef = React.createRef();
+  }
+
   handleValueChange = (e) => {
     this.setState({value: e.target.value});
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const form = this.formRef.current; // form node
+    const player = this.textRef.current; // input node
+
+    console.log(player.validity.valid);
+    console.log(form.checkValidity());
+
+    if (!form.checkValidity()) {
+      return;
+    }
+
     this.props.addPlayer(this.state.value);
     this.setState({
       value: ''
@@ -20,10 +37,13 @@ export class AddPlayerForm extends Component {
   render() {
     return (
       <div className="container">
-        <form className="row player align-items-center" onSubmit={this.handleSubmit}>
+        <form ref={this.formRef} noValidate
+              className="row player align-items-center" onSubmit={this.handleSubmit}>
           <div className="col-9">
             {/*<label htmlFor="playerName" className="form-label">Player Name</label>*/}
-            <input type="text" className="form-control" id="playerName" placeholder="input player name"
+            <input ref={this.textRef}
+                   type="text" className="form-control" id="playerName" placeholder="input player name"
+                   required
                    value={this.state.value} onChange={this.handleValueChange}></input>
           </div>
           <div className="col-3 d-grid">
