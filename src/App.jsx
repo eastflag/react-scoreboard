@@ -4,34 +4,28 @@ import './App.css';
 import {Header} from "./components/Header";
 import {Player} from "./components/Player";
 import {AddPlayerForm} from "./components/AddPlayerForm";
-import _ from 'lodash';
 import axios from 'axios';
 
 class App extends React.Component {
   state = {
-    players: [
-      {name: 'LDK', score: 0, id: 1},
-      {name: 'HONG', score: 0, id: 2},
-      {name: 'KIM', score: 0, id: 3},
-      {name: 'PARK', score: 0, id: 4},
-    ]
+    players: []
   };
 
   // 화면 렌더링 직후에 자동으로 호출되는 라이프사이클 메서드
   componentDidMount() {
     axios.get('http://api.eastflag.co.kr:8000/api/score/list')
-      .then(body => {
-        console.log(body);
-        const {data} = body;
+      .then(response => {
+        console.log(response);
+        const {data} = response;
         this.setState({players: data});
       });
   }
 
   handleRemovePlayer = (id) => {
     axios.delete(`http://api.eastflag.co.kr:8000/api/score?id=${id}`)
-      .then(body => {
-        console.log(body);
-        const {data} = body;
+      .then(response => {
+        console.log(response);
+        const {data} = response;
         if (data.result === 0) {
           this.setState(prevState => {
             return {
@@ -59,9 +53,9 @@ class App extends React.Component {
   handleAddPlayer = (name) => {
     console.log(name);
     axios.post('http://api.eastflag.co.kr:8000/api/score', {name})
-      .then(body => {
-        console.log(body);
-        const {data} = body;
+      .then(response => {
+        console.log(response);
+        const {data} = response;
 
         this.setState(prevState => {
           const players = [ ... prevState.players ];
