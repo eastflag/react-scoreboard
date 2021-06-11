@@ -5,6 +5,7 @@ import {Header} from "./components/Header";
 import {Player} from "./components/Player";
 import {AddPlayerForm} from "./components/AddPlayerForm";
 import _ from 'lodash';
+import axios from 'axios';
 
 class App extends React.Component {
   state = {
@@ -16,12 +17,29 @@ class App extends React.Component {
     ]
   };
 
+  // 화면 렌더링 직후에 자동으로 호출되는 라이프사이클 메서드
+  componentDidMount() {
+    axios.get('http://api.eastflag.co.kr:8000/api/score/list')
+      .then(body => {
+        console.log(body);
+        const {data} = body;
+        this.setState({players: data});
+      });
+  }
+
   handleRemovePlayer = (id) => {
-    this.setState(prevState => {
-      return {
-        players: prevState.players.filter(item => item.id !== id)
-      }
-    })
+    axios.delete(`http://api.eastflag.co.kr:8000/api/score?id=${id}`)
+      .then(body => {
+        console.log(body);
+        const {data} = body;
+        if (data.result === 0) {
+          this.setState(prevState => {
+            return {
+              players: prevState.players.filter(item => item.id !== id)
+            }
+          })
+        }
+      });
   }
 
   handleChangeScore = (id, delta) => {
@@ -40,16 +58,17 @@ class App extends React.Component {
 
   handleAddPlayer = (name) => {
     console.log(name);
-    this.setState(prevState => {
-      const players = [ ... prevState.players ];
+    axios.post('http://api.eastflag.co.kr:8000/api/score', {name})
+      .then(body => {
+        console.log(body);
+        const {data} = body;
 
-      const maxObject = _.maxBy(players, 'id');
-      const maxId = maxObject.id + 1;
-      console.log(maxId);
-      players.unshift({id: maxId, name, score: 0});
-
-      return { players };
-    });
+        this.setState(prevState => {
+          const players = [ ... prevState.players ];
+          players.unshift(data);
+          return { players };
+        });
+      });
   };
 
   render() {
