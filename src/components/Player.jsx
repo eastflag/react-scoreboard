@@ -8,6 +8,7 @@ export const Player = (props) => (
                 onClick={() => props.removePlayer(props.id)}>x</button>
       </div>
       <div className="col-8">
+        {props.children}
         <span>{props.name}</span>
       </div>
       <div className="col-3 counter">

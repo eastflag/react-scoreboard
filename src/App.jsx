@@ -2,9 +2,10 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import {Header} from "./components/Header";
-import {Player} from "./components/Player";
 import {AddPlayerForm} from "./components/AddPlayerForm";
 import axios from 'axios';
+import {CustomPlayer} from "./components/CustomPlayer";
+import _ from 'lodash';
 
 class App extends React.Component {
   state = {
@@ -65,6 +66,13 @@ class App extends React.Component {
       });
   };
 
+  getHighScore() {
+    const maxObject = _.maxBy(this.state.players, 'score');
+    const highScore = maxObject.score;
+    // 0은 디폴트이므로  0보다 클 경우만 highScore로 지정한다.
+    return highScore > 0 ? highScore : null;
+  }
+
   render() {
     return (
       <div className="container p-3">
@@ -72,8 +80,9 @@ class App extends React.Component {
 
         {/*Players List*/}
         { this.state.players.map(item =>
-          <Player key={item.id}
+          <CustomPlayer key={item.id}
                   name={item.name} score={item.score} id={item.id}
+                  isHighScore={item.score === this.getHighScore()}
                   removePlayer={this.handleRemovePlayer}
                   changeScore={this.handleChangeScore} />) }
 

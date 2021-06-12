@@ -16,3 +16,21 @@
 .counter {
   border-left: solid 2px #DDDDDD;
 }
+
+/*highscore 구현하기 위한 svg 애니메이션*/
+.svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-right: 0.5rem;
+  fill: #F0F0F0;
+}
+
+.is-high-score {
+  fill: #FFC657;
+  animation: grow 0.35s ease-in-out;
+  transform-origin: 50% 50%;
+}
+
+@keyframes grow {
+  50% { transform: scale(1.4) rotate(-3deg); }
+}
