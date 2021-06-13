@@ -1,15 +1,19 @@
 import React, {useRef, useState} from 'react';
+import axios from "axios";
+import {addPlayer} from "../redux/actions";
+import {useDispatch} from "react-redux";
 
 export const AddPlayerForm = (props) => {
   const formRef = useRef();
   const textRef = useRef();
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
   const handleValueChange = (e) => {
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const form = formRef.current; // form node
@@ -23,9 +27,12 @@ export const AddPlayerForm = (props) => {
       return;
     }
 
-    props.addPlayer(value);
-    setValue('')
+    const response = await axios.post('http://api.eastflag.co.kr:8000/api/score', {name: value})
 
+    console.log(response);
+    const {data} = response;
+    dispatch(addPlayer(data))
+    setValue('')
     form.classList.remove('was-validated');
   }
 

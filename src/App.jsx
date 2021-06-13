@@ -23,31 +23,10 @@ const App = () => {
       });
   }, [])
 
-  const handleRemovePlayer = (id) => {
-    axios.delete(`http://api.eastflag.co.kr:8000/api/score?id=${id}`)
-      .then(response => {
-        console.log(response);
-        const {data} = response;
-        if (data.result === 0) {
-          dispatch(removePlayer(id));
-        }
-      });
-  }
-
   const handleChangeScore = (id, delta) => {
     console.log('id: ' + id, 'delta: ' + delta);
-    dispatch(changeScore(id, delta));
-  }
 
-  const handleAddPlayer = (name) => {
-    console.log(name);
-    axios.post('http://api.eastflag.co.kr:8000/api/score', {name})
-      .then(response => {
-        console.log(response);
-        const {data} = response;
-        dispatch(addPlayer(data))
-      });
-  };
+  }
 
   const getHighScore = () => {
     const maxObject = _.maxBy(players, 'score');
@@ -65,10 +44,9 @@ const App = () => {
         <CustomPlayer key={item.id}
                       name={item.name} score={item.score} id={item.id}
                       isHighScore={item.score === getHighScore()}
-                      removePlayer={handleRemovePlayer}
-                      changeScore={handleChangeScore} />) }
+                      />) }
 
-      <AddPlayerForm addPlayer={handleAddPlayer}></AddPlayerForm>
+      <AddPlayerForm></AddPlayerForm>
     </div>
   )
 }
