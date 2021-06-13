@@ -6,16 +6,20 @@ import {AddPlayerForm} from "./components/AddPlayerForm";
 import axios from 'axios';
 import {CustomPlayer} from "./components/CustomPlayer";
 import _ from 'lodash';
+import {useDispatch, useSelector} from "react-redux";
+import {addPlayer, changeScore, removePlayer, setPlayer} from "./redux/actions";
 
-const App = (props) => {
-  const [players, setPlayers] = useState([]);
+const App = () => {
+  // 전체 store에서 playerReducer 에서 사용중인 players 데이터를 가져온다.
+  const players = useSelector(state => state.playerReducer.players);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get('http://api.eastflag.co.kr:8000/api/score/list')
       .then(response => {
         console.log(response);
         const {data} = response;
-        setPlayers(data);
+        dispatch(setPlayer(data));
       });
   }, [])
 
@@ -25,21 +29,14 @@ const App = (props) => {
         console.log(response);
         const {data} = response;
         if (data.result === 0) {
-          setPlayers(players.filter(item => item.id !== id));
+          dispatch(removePlayer(id));
         }
       });
   }
 
   const handleChangeScore = (id, delta) => {
     console.log('id: ' + id, 'delta: ' + delta);
-
-    const copyPlayers = [ ...players ];
-    copyPlayers.forEach(player => {
-      if (player.id === id) {
-        player.score += delta;
-      }
-    })
-    setPlayers(copyPlayers);
+    dispatch(changeScore(id, delta));
   }
 
   const handleAddPlayer = (name) => {
@@ -48,10 +45,7 @@ const App = (props) => {
       .then(response => {
         console.log(response);
         const {data} = response;
-
-        const copyPlayers = [ ... players ];
-        copyPlayers.unshift(data);
-        setPlayers(copyPlayers);
+        dispatch(addPlayer(data))
       });
   };
 

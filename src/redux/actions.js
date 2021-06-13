@@ -1,24 +1,21 @@
 import {
+  SET_PLAYER,
   ADD_PLAYER,
   CHANGE_SCORE,
-  REFRESH_HERO,
   REMOVE_PLAYER,
-  SEARCH_NAME,
-  SET_ISSORTED,
-  UPDATE_TITLE
 } from "./actionTypes";
 
-export const updateTitle = (title) => {
+export const setPlayer = (players) => {
   return {
-    type: UPDATE_TITLE,
-    title
+    type: SET_PLAYER,
+    players
   }
 }
 
-export const addPlayer = (name) => {
+export const addPlayer = ({id, name, score}) => {
   return {
     type: ADD_PLAYER,
-    name
+    player: {id, name, score}
   }
 }
 
@@ -34,25 +31,5 @@ export const removePlayer = (id) => {
   return {
     type: REMOVE_PLAYER,
     id
-  }
-}
-
-export const refreshHero = () => {
-  return {
-    type: REFRESH_HERO
-  }
-}
-
-export const setIsSorted = (isSorted) => {
-  return {
-    type: SET_ISSORTED,
-    isSorted
-  }
-}
-
-export const searchName = (name) => {
-  return {
-    type: SEARCH_NAME,
-    name
   }
 }
